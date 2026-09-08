@@ -1,0 +1,203 @@
+import { ContributionNode } from '../types';
+import { USERS } from './mockProjects';
+
+export const INITIAL_TREES: Record<string, ContributionNode[]> = {
+  'proj-01': [
+    {
+      id: 'node-01-root',
+      projectId: 'proj-01',
+      parentId: null,
+      author: USERS.adam,
+      content: 'The city woke up at 7:12 AM. The sirens were off for the first time in 40 years, and nobody knew which bridge had permission to cross the river.',
+      type: 'root',
+      branchName: 'Original Line',
+      timestamp: '3 days ago',
+      depth: 0,
+    },
+    {
+      id: 'node-01-c1',
+      projectId: 'proj-01',
+      parentId: 'node-01-root',
+      author: USERS.aditi,
+      content: 'On the northern pier, a tea vendor turned off his kettle. He looked at the water and noticed the river was flowing backwards toward the mountains.',
+      type: 'continue',
+      branchName: 'Original Line',
+      timestamp: '2 days ago',
+      depth: 1,
+    },
+    {
+      id: 'node-01-b1',
+      projectId: 'proj-01',
+      parentId: 'node-01-root',
+      author: USERS.rahul,
+      content: 'In the lower subway concourses, transit officers began chalking arrows on the walls, guiding pedestrians by intuition rather than train maps.',
+      type: 'branch',
+      branchName: 'Branch A // The Chalked Subways',
+      timestamp: '1 day ago',
+      depth: 1,
+    },
+    {
+      id: 'node-01-b2',
+      projectId: 'proj-01',
+      parentId: 'node-01-root',
+      author: USERS.elena,
+      content: 'A postal courier opened an envelope stamped 1912. Inside was a key and a note: “If you hear quiet, do not touch the brass doorknobs.”',
+      type: 'branch',
+      branchName: 'Branch B // The 1912 Courier',
+      timestamp: '18 hours ago',
+      depth: 1,
+    },
+    {
+      id: 'node-01-c2',
+      projectId: 'proj-01',
+      parentId: 'node-01-c1',
+      author: USERS.siddharth,
+      content: 'Children began gathering along the embankment with fishing nets, catching floating scraps of paper covered in handwritten numbers.',
+      type: 'continue',
+      branchName: 'Original Line',
+      timestamp: '8 hours ago',
+      depth: 2,
+    },
+    {
+      id: 'node-01-remix1',
+      projectId: 'proj-01',
+      parentId: 'node-01-b1',
+      author: USERS.zoya,
+      content: 'Remixed from The Chalked Subways: The arrows glowed faintly when someone stepped over them in silence.',
+      type: 'remix',
+      branchName: 'Remix // Phosphor Arrows',
+      remixedFrom: 'node-01-b1',
+      timestamp: '2m ago',
+      depth: 2,
+    },
+  ],
+  'proj-02': [
+    {
+      id: 'node-02-root',
+      projectId: 'proj-02',
+      parentId: null,
+      author: USERS.karan,
+      content: 'Rhodes chord progression [Ebm9 - Bmaj7 - Abm7] running through an old Roland tape delay at 84 BPM.',
+      type: 'root',
+      branchName: 'Foundation Stem',
+      timestamp: '1 week ago',
+      depth: 0,
+    },
+    {
+      id: 'node-02-c1',
+      projectId: 'proj-02',
+      parentId: 'node-02-root',
+      author: USERS.samir,
+      content: 'Added stereo field microphone recording: heavy rain hitting glass panes of an abandoned botanical garden.',
+      type: 'continue',
+      branchName: 'Foundation Stem',
+      timestamp: '4 days ago',
+      depth: 1,
+    },
+    {
+      id: 'node-02-b1',
+      projectId: 'proj-02',
+      parentId: 'node-02-root',
+      author: USERS.marcus,
+      content: 'Sub Bass Drone + wooden clave hit on beat 3 and 7. Warm analog filter resonance at 320 Hz.',
+      type: 'branch',
+      branchName: 'Stem Fork // Sub Acoustic',
+      timestamp: '2 days ago',
+      depth: 1,
+    },
+    {
+      id: 'node-02-c2',
+      projectId: 'proj-02',
+      parentId: 'node-02-b1',
+      author: USERS.leo,
+      content: 'Muted trumpet passage playing 4 sustained notes with gentle vibrato and plate reverb.',
+      type: 'continue',
+      branchName: 'Stem Fork // Sub Acoustic',
+      timestamp: '5m ago',
+      depth: 2,
+    },
+  ],
+  'proj-03': [
+    {
+      id: 'node-03-root',
+      projectId: 'proj-03',
+      parentId: null,
+      author: USERS.rahul,
+      content: 'Universities lose campus real estate. All learning happens in roving cohorts traveling between eco-restoration sites.',
+      type: 'root',
+      branchName: 'Thesis',
+      timestamp: '2 days ago',
+      depth: 0,
+    },
+    {
+      id: 'node-03-b1',
+      projectId: 'proj-03',
+      parentId: 'node-03-root',
+      author: USERS.tariq,
+      content: 'Graduation requirement: Build a community well or solar kiln that functions for 3 years without external repair.',
+      type: 'branch',
+      branchName: 'Branch 01 // Physical Proof',
+      timestamp: '1 day ago',
+      depth: 1,
+    },
+    {
+      id: 'node-03-b2',
+      projectId: 'proj-03',
+      parentId: 'node-03-root',
+      author: USERS.zoya,
+      content: 'Faculty are chosen by rotation lottery: senior farmers teach hydrology; 19-year-olds teach algorithmic history.',
+      type: 'branch',
+      branchName: 'Branch 02 // Rotation Guilds',
+      timestamp: '12m ago',
+      depth: 1,
+    },
+  ],
+};
+
+// Generator for default project trees when opening any project
+export function getTreeForProject(projectId: string, projectTitle: string, initialPiece: string): ContributionNode[] {
+  if (INITIAL_TREES[projectId]) {
+    return INITIAL_TREES[projectId];
+  }
+
+  const userKeys = Object.keys(USERS);
+  const u1 = USERS[userKeys[Math.floor(Math.random() * userKeys.length)]];
+  const u2 = USERS[userKeys[Math.floor(Math.random() * userKeys.length)]];
+  const u3 = USERS[userKeys[Math.floor(Math.random() * userKeys.length)]];
+
+  return [
+    {
+      id: `node-${projectId}-root`,
+      projectId,
+      parentId: null,
+      author: u1,
+      content: initialPiece,
+      type: 'root',
+      branchName: 'Original Seed',
+      timestamp: '3 days ago',
+      depth: 0,
+    },
+    {
+      id: `node-${projectId}-c1`,
+      projectId,
+      parentId: `node-${projectId}-root`,
+      author: u2,
+      content: `Layer added: exploring the consequence of “${initialPiece.slice(0, 45)}...”. What happens when the second bell rings?`,
+      type: 'continue',
+      branchName: 'Original Seed',
+      timestamp: '1 day ago',
+      depth: 1,
+    },
+    {
+      id: `node-${projectId}-b1`,
+      projectId,
+      parentId: `node-${projectId}-root`,
+      author: u3,
+      content: 'A divergent fork introduced here: what if the perspective flips to an observer outside the boundary?',
+      type: 'branch',
+      branchName: 'Branch A // Inverted Angle',
+      timestamp: '4 hours ago',
+      depth: 1,
+    },
+  ];
+}

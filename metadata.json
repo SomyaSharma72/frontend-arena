@@ -1,0 +1,6 @@
+{
+  "name": "RELAY — START SOMETHING. PASS IT ON.",
+  "description": "A collaborative social platform where people start projects, branch ideas, and remix creations together. Start something. Pass it on.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
