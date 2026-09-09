@@ -8,7 +8,9 @@ import {
   ActivityNotification,
   Conversation,
   Message,
-  UserProfile
+  UserProfile,
+  TrailEntry,
+  ProjectActivity
 } from './types';
 import { INITIAL_PROJECTS, CURRENT_USER } from './data/mockProjects';
 import { INITIAL_TREES, getTreeForProject } from './data/mockTrees';
@@ -28,12 +30,28 @@ import { CreateProjectView } from './components/CreateProjectView';
 import { ProfileView } from './components/ProfileView';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { ContributionModal } from './components/ContributionModal';
+import { PassItOnModal } from './components/PassItOnModal';
 import { BackgroundIllustrations } from './components/BackgroundIllustrations';
 import { Sparkles, Check } from 'lucide-react';
+import { ProjectTrail } from './components/ProjectTrail';
 
 export default function App() {
   const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
   const [trees, setTrees] = useState<Record<string, ContributionNode[]>>(INITIAL_TREES);
+  const [trails, setTrails] = useState<Record<string, TrailEntry[]>>({
+    'proj-01': [
+      { id: 'trail-01-root', author: INITIAL_PROJECTS[0].creator, action: 'started', timestamp: '3d ago', preview: INITIAL_PROJECTS[0].currentPiece },
+      { id: 'trail-01-aditi', author: INITIAL_PROJECTS[0].activeContributors[0], action: 'continued', timestamp: '2h ago', preview: 'The clocks began losing minutes in different neighborhoods.' },
+      { id: 'trail-01-rahul', author: INITIAL_PROJECTS[0].activeContributors[1], action: 'remixed', timestamp: '1h ago', preview: 'A map is only honest when it admits what it cannot name.' },
+    ],
+  });
+  const [projectActivity, setProjectActivity] = useState<Record<string, ProjectActivity[]>>({
+    'proj-01': [
+      { id: 'activity-01-start', actor: INITIAL_PROJECTS[0].creator, text: 'started this', timestamp: '3h ago', accent: '#FFE28A' },
+      { id: 'activity-01-piece', actor: INITIAL_PROJECTS[0].activeContributors[0], text: 'added a piece', timestamp: '2h ago', accent: '#A9E3CF' },
+      { id: 'activity-01-remix', actor: INITIAL_PROJECTS[0].activeContributors[1], text: 'remixed it', timestamp: '1h ago', accent: '#B8A7FF' },
+    ],
+  });
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   
@@ -70,6 +88,15 @@ export default function App() {
 
   // Toast notification state
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isPassModalOpen, setIsPassModalOpen] = useState(false);
+  const [lastPassedRecipient, setLastPassedRecipient] = useState<Collaborator | null>(null);
+
+  const passRecipients: Collaborator[] = [
+    SOCIAL_USERS.maya,
+    SOCIAL_USERS.rahul,
+    SOCIAL_USERS.priya,
+    SOCIAL_USERS.aditi,
+  ];
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -170,6 +197,52 @@ export default function App() {
     setIsContributionModalOpen(true);
   };
 
+  const handlePassItOn = (recipient: Collaborator) => {
+    if (!selectedProject) return;
+    const project = selectedProject;
+    const passedProject: Project = {
+      ...project,
+      passedBy: user,
+      passedTo: recipient,
+      passedAt: 'Just now',
+      passedCount: (project.passedCount || 0) + 1,
+      recentActivity: `${user.name} passed this to ${recipient.name} just now`,
+    };
+    const passTrail: TrailEntry = {
+      id: `trail-${Date.now()}`,
+      author: user,
+      action: 'passed',
+      timestamp: 'Just now',
+      preview: `Passed to ${recipient.name} to take the next turn.`,
+    };
+    const passActivity: ProjectActivity = {
+      id: `activity-${Date.now()}`,
+      actor: user,
+      text: `passed this to ${recipient.name}`,
+      timestamp: 'Just now',
+      accent: '#FFB49F',
+    };
+
+    setSelectedProject(passedProject);
+    setProjects((prev) => prev.map((item) => (item.id === project.id ? passedProject : item)));
+    setTrails((prev) => ({ ...prev, [project.id]: [...(prev[project.id] || []), passTrail] }));
+    setProjectActivity((prev) => ({ ...prev, [project.id]: [passActivity, ...(prev[project.id] || [])] }));
+    setNotifications((prev) => [{
+      id: `notification-${Date.now()}`,
+      type: 'passed',
+      user,
+      text: `${user.name} passed ${project.title} to you.`,
+      projectTitle: project.title,
+      projectId: project.id,
+      timestamp: 'Just now',
+      read: false,
+      category: 'collaborations',
+    }, ...prev]);
+    setLastPassedRecipient(recipient);
+    setIsPassModalOpen(false);
+    showToast(`Passed to ${recipient.name}.`);
+  };
+
   // Handle submission of a new contribution node
   const handleSubmitContribution = (
     content: string,
@@ -226,6 +299,24 @@ export default function App() {
     setSelectedProject(updatedProject);
     setProjects((prev) => prev.map((p) => (p.id === projectId ? updatedProject : p)));
 
+    const trailAction: TrailEntry['action'] = type === 'branch' ? 'branched' : type === 'remix' ? 'remixed' : 'continued';
+    const trailEntry: TrailEntry = {
+      id: `trail-${newNodeId}`,
+      author: user,
+      action: trailAction,
+      timestamp: 'Just now',
+      preview: content,
+    };
+    const activityEntry: ProjectActivity = {
+      id: `activity-${newNodeId}`,
+      actor: user,
+      text: type === 'branch' ? 'created a branch' : type === 'remix' ? 'remixed this project' : 'continued this project',
+      timestamp: 'Just now',
+      accent: type === 'branch' ? '#8FD8FF' : type === 'remix' ? '#A9E3CF' : '#FFE28A',
+    };
+    setTrails((prev) => ({ ...prev, [projectId]: [...(prev[projectId] || []), trailEntry] }));
+    setProjectActivity((prev) => ({ ...prev, [projectId]: [activityEntry, ...(prev[projectId] || [])] }));
+
     // Increment user metrics
     setUser((prev) => ({
       ...prev,
@@ -235,6 +326,17 @@ export default function App() {
     }));
 
     showToast(`✨ YOUR PIECE WAS WOVEN INTO "${selectedProject.title}"!`);
+  };
+
+  const handleAddMessageToProject = (projectId: string, text: string) => {
+    const project = projects.find((item) => item.id === projectId);
+    if (!project) return;
+    const projectTree = trees[projectId] || getTreeForProject(projectId, project.title, project.currentPiece);
+    setSelectedProject(project);
+    setContributionTargetNode(projectTree[projectTree.length - 1] || null);
+    setContributionMode('continue');
+    setIsContributionModalOpen(true);
+    showToast('Message added as a contribution draft.');
   };
 
   // View creator profile
@@ -508,6 +610,7 @@ export default function App() {
             currentUser={user}
             onSelectCreator={handleSelectCreator}
             onSelectProjectById={handleSelectProjectById}
+            onAddMessageToProject={handleAddMessageToProject}
           />
         )}
 
@@ -572,6 +675,10 @@ export default function App() {
             onOpenContribution={handleOpenContribution}
             onOpenProjectChat={handleOpenProjectChat}
             onSelectCreator={handleSelectCreator}
+            trail={trails[selectedProject.id] || []}
+            activity={projectActivity[selectedProject.id] || []}
+            onPassItOn={() => setIsPassModalOpen(true)}
+            passedRecipient={lastPassedRecipient}
           />
         )}
       </AnimatePresence>
@@ -593,6 +700,15 @@ export default function App() {
           onSubmitContribution={handleSubmitContribution}
         />
       )}
+
+      <PassItOnModal
+        project={selectedProject || INITIAL_PROJECTS[0]}
+        recipients={passRecipients}
+        isOpen={isPassModalOpen && !!selectedProject}
+        selectedRecipient={lastPassedRecipient}
+        onClose={() => setIsPassModalOpen(false)}
+        onPass={handlePassItOn}
+      />
 
       {/* Social Footer */}
       <footer className="border-t-2 border-[#171717] bg-white py-10 text-[#171717] text-xs font-mono-tech mt-12">

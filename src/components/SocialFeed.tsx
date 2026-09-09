@@ -189,6 +189,15 @@ export const SocialFeed: React.FC<SocialFeedProps> = ({
               const isFollowing = followingUserIds.includes(creatorId);
               const isAudio = project.category === 'music';
               const isRemix = !!project.remixedFromTitle;
+              const contributionLabel = project.category === 'music'
+                ? 'ADD A LAYER'
+                : project.category === 'visual'
+                ? 'ADD TO THE PIECE'
+                : project.category === 'challenge'
+                ? 'ADD THE NEXT RULE'
+                : project.category === 'story'
+                ? 'CONTINUE THE STORY'
+                : 'BUILD ON THIS';
 
               return (
                 <article
@@ -364,6 +373,8 @@ export const SocialFeed: React.FC<SocialFeedProps> = ({
                           {project.contributionsCount} pieces
                         </span>
                         <span>·</span>
+                        <span className="text-[#6657E8] font-bold">Built on {Math.max(1, project.contributionsCount - 1)}x</span>
+                        <span>·</span>
                         <span className="flex items-center gap-1.5">
                           <GitBranch className="w-4 h-4 text-[#171717]/60" />
                           {project.branchesCount} branches
@@ -396,7 +407,7 @@ export const SocialFeed: React.FC<SocialFeedProps> = ({
                       >
                         <Sparkles className="w-4 h-4" />
                         <span>
-                          {isAudio ? 'ADD YOUR LAYER 🎵' : isRemix ? 'VIEW REMIX ⚡' : 'BUILD ON THIS →'}
+                          {isRemix ? 'VIEW REMIX ⚡' : `${contributionLabel} →`}
                         </span>
                       </button>
 

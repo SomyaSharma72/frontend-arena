@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, GitBranch, Sparkles, Share2, MessageSquare, Check, Users } from 'lucide-react';
-import { Project, ContributionNode, Collaborator } from '../types';
+import { ArrowLeft, GitBranch, Sparkles, Share2, MessageSquare, Check, Users, Send } from 'lucide-react';
+import { Project, ContributionNode, Collaborator, ProjectActivity, TrailEntry } from '../types';
 import { ContributionTree } from './ContributionTree';
+import { ProjectTrail } from './ProjectTrail';
 
 interface ProjectDetailModalProps {
   project: Project;
@@ -12,6 +13,10 @@ interface ProjectDetailModalProps {
   onOpenContribution: (node?: ContributionNode, mode?: 'continue' | 'branch' | 'remix') => void;
   onOpenProjectChat?: (project: Project) => void;
   onSelectCreator?: (creator: Collaborator) => void;
+  onPassItOn?: () => void;
+  trail?: TrailEntry[];
+  activity?: ProjectActivity[];
+  passedRecipient?: Collaborator | null;
 }
 
 export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
@@ -22,6 +27,10 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
   onOpenContribution,
   onOpenProjectChat,
   onSelectCreator,
+  onPassItOn,
+  trail = [],
+  activity = [],
+  passedRecipient,
 }) => {
   const [selectedNode, setSelectedNode] = useState<ContributionNode>(
     treeNodes[treeNodes.length - 1] || treeNodes[0]
@@ -163,6 +172,26 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             </span>
           </div>
 
+          {project.passedTo && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-[#FFB49F]/25 border border-[#FFB49F]"
+            >
+              <div className="flex items-center gap-3">
+                <img src={project.passedTo.avatar} alt="" className="w-9 h-9 rounded-full object-cover border border-[#181818]" referrerPolicy="no-referrer" />
+                <div>
+                  <p className="text-sm font-display font-bold">{project.passedBy?.name || 'Someone'} passed this to {project.passedTo.name}.</p>
+                  <p className="text-[10px] font-mono-tech text-[#77736D]">The next move belongs to the chain.</p>
+                </div>
+              </div>
+              <div className="flex gap-2 shrink-0">
+                <button onClick={() => onOpenContribution(selectedNode, 'continue')} className="px-3 py-2 rounded-lg bg-[#FFE28A] border border-[#181818] text-[10px] font-mono-tech font-bold cursor-pointer">CONTINUE</button>
+                <button onClick={() => onOpenContribution(selectedNode, 'branch')} className="px-3 py-2 rounded-lg bg-[#8FD8FF] border border-[#181818] text-[10px] font-mono-tech font-bold cursor-pointer">ANOTHER WAY</button>
+              </div>
+            </motion.div>
+          )}
+
           <div className="p-6 bg-[#F8F6F0] border border-[#DDD9D0] rounded-xl shadow-subtle">
             <p className="font-serif-editorial text-2xl sm:text-3xl italic text-[#202124] leading-relaxed">
               “{selectedNode ? selectedNode.content : project.currentPiece}”
@@ -222,8 +251,29 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   Re-interpret this piece in your own style.
                 </p>
               </button>
+
+              {onPassItOn && (
+                <button
+                  id="action-btn-pass"
+                  onClick={onPassItOn}
+                  className="p-3.5 rounded-xl bg-[#FFB49F] hover:bg-[#FFE28A] border border-[#e69c88] shadow-subtle hover:shadow-card transition-all text-left cursor-pointer active:scale-[0.99]"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-mono-tech font-bold text-[#202124]">PASS IT ON</span>
+                    <Send className="w-4 h-4" />
+                  </div>
+                  <p className="text-xs text-[#202124]/80 mt-1 font-sans-clean">Hand the next turn to a person.</p>
+                </button>
+              )}
             </div>
           </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 text-[10px] font-mono-tech font-bold uppercase tracking-wide">
+          <span className="px-3 py-1.5 rounded-full bg-[#FFE28A] border border-[#e4c95d]">Built on {Math.max(1, project.contributionsCount - 1)}x</span>
+          <span className="px-3 py-1.5 rounded-full bg-[#A9E3CF] border border-[#88cdb4]">Remixed {project.remixesCount}x</span>
+          <span className="px-3 py-1.5 rounded-full bg-[#FFB49F] border border-[#e69c88]">Passed to {project.passedCount || 0} people</span>
+          <span className="px-3 py-1.5 rounded-full bg-[#8FD8FF] border border-[#72bfdc]">{project.contributorsCount} contributors</span>
         </div>
 
         {/* Visual Branch Tree Section */}
@@ -235,6 +285,8 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             onStartContributionForNode={(node, mode) => onOpenContribution(node, mode)}
           />
         </section>
+
+        <ProjectTrail trail={trail} activity={activity} />
 
         {/* Project Piece Chronicle (Linear Archive) */}
         <div className="bg-white border border-[#DDD9D0] rounded-2xl p-6 sm:p-8 shadow-card space-y-4">

@@ -51,6 +51,7 @@ export interface Project {
   lastActive: string;
   tags: string[];
   treeRootNodeId: string;
+  treeRootId?: string;
   remixedFromTitle?: string;
   mediaType?: 'image' | 'audio' | 'video';
   audioSnippet?: {
@@ -59,6 +60,10 @@ export interface Project {
     layersCount?: number;
     duration?: string;
   };
+  passedTo?: Collaborator;
+  passedBy?: Collaborator;
+  passedAt?: string;
+  passedCount?: number;
 }
 
 export interface ContributionNode {
@@ -77,7 +82,7 @@ export interface ContributionNode {
 
 export interface ActivityNotification {
   id: string;
-  type: 'follow' | 'continue' | 'branch' | 'remix' | 'join' | 'milestone' | 'message';
+  type: 'follow' | 'continue' | 'branch' | 'remix' | 'join' | 'milestone' | 'message' | 'passed';
   user: Collaborator;
   text: string;
   projectTitle?: string;
@@ -85,6 +90,22 @@ export interface ActivityNotification {
   timestamp: string;
   read: boolean;
   category?: 'all' | 'mentions' | 'collaborations';
+}
+
+export interface TrailEntry {
+  id: string;
+  author: Collaborator;
+  action: 'started' | 'continued' | 'passed' | 'branched' | 'remixed' | 'added';
+  timestamp: string;
+  preview?: string;
+}
+
+export interface ProjectActivity {
+  id: string;
+  actor: Collaborator;
+  text: string;
+  timestamp: string;
+  accent?: string;
 }
 
 export interface UserProfile {

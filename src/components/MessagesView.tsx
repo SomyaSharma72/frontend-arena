@@ -24,6 +24,7 @@ interface MessagesViewProps {
   currentUser: UserProfile;
   onSelectCreator: (creator: Collaborator) => void;
   onSelectProjectById?: (projectId: string) => void;
+  onAddMessageToProject?: (projectId: string, text: string) => void;
 }
 
 export const MessagesView: React.FC<MessagesViewProps> = ({
@@ -34,6 +35,7 @@ export const MessagesView: React.FC<MessagesViewProps> = ({
   currentUser,
   onSelectCreator,
   onSelectProjectById,
+  onAddMessageToProject,
 }) => {
   const [inputText, setInputText] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'direct' | 'project'>('all');
@@ -320,6 +322,16 @@ export const MessagesView: React.FC<MessagesViewProps> = ({
                           }`}
                         >
                           <p>{msg.text}</p>
+
+                          {!isMe && activeConv.projectId && onAddMessageToProject && (
+                            <button
+                              onClick={() => onAddMessageToProject(activeConv.projectId!, msg.text)}
+                              className="mt-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#FFE28A] border border-[#171717] text-[10px] font-mono-tech font-bold text-[#171717] cursor-pointer hover:bg-[#FFB49F]"
+                            >
+                              <Sparkles className="w-3 h-3" />
+                              Add this idea to project
+                            </button>
+                          )}
 
                           {/* Interactive Audio stem preview if attached */}
                           {msg.audioAttachment && (

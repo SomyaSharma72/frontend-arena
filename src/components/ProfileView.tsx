@@ -269,6 +269,35 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           </div>
         </div>
 
+        {!isViewingOther && (
+          <section className="bg-white border-2 border-[#171717] rounded-3xl p-6 sm:p-8 shadow-sticker">
+            <div className="flex items-start justify-between gap-4 mb-5">
+              <div>
+                <p className="text-[10px] font-mono-tech font-bold uppercase tracking-widest text-[#6657E8]">Creative influence</p>
+                <h2 className="font-serif-editorial text-3xl font-bold mt-1">Your Trail</h2>
+              </div>
+              <span className="text-[10px] font-mono-tech font-bold bg-[#FFE28A] border border-[#171717] rounded-full px-3 py-1.5">OPEN CHAIN</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
+              {[user, { name: 'Maya', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=240&auto=format&fit=crop' }, { name: 'Rahul', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=240&auto=format&fit=crop' }, { name: 'Priya', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=240&auto=format&fit=crop' }].map((person, index, chain) => (
+                <React.Fragment key={person.name}>
+                  <div className="flex items-center gap-2 px-2.5 py-2 rounded-xl bg-[#FAF9F6] border border-[#DDD9D0]">
+                    <img src={person.avatar} alt="" className="w-7 h-7 rounded-full object-cover border border-[#171717]" referrerPolicy="no-referrer" />
+                    <span className="text-xs font-display font-bold">{person.name}</span>
+                  </div>
+                  {index < chain.length - 1 && <span className="font-mono-tech text-[#6657E8]">-&gt;</span>}
+                </React.Fragment>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-2 text-[10px] font-mono-tech font-bold uppercase">
+              <span className="px-3 py-1.5 rounded-full bg-[#FFE28A] border border-[#e4c95d]">Built on 17x</span>
+              <span className="px-3 py-1.5 rounded-full bg-[#A9E3CF] border border-[#88cdb4]">Remixed 8x</span>
+              <span className="px-3 py-1.5 rounded-full bg-[#FFB49F] border border-[#e69c88]">Passed to 4 people</span>
+              <span className="px-3 py-1.5 rounded-full bg-[#8FD8FF] border border-[#72bfdc]">Inspired 3 branches</span>
+            </div>
+          </section>
+        )}
+
         {/* Content Shelf Tabs */}
         <div className="space-y-6">
           <div className="flex items-center gap-2 border-b-2 border-[#171717] pb-3 overflow-x-auto">
