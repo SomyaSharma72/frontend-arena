@@ -362,44 +362,14 @@ Project Structure
 
 relay/
 ├── src/
-│   ├── components/
-│   │   ├── navigation/
-│   │   ├── project/
-│   │   ├── feed/
-│   │   ├── messaging/
-│   │   ├── notifications/
-│   │   ├── profile/
-│   │   ├── create/
-│   │   └── ui/
-│   │
-│   ├── data/
-│   │   ├── users/
-│   │   ├── projects/
-│   │   ├── contributions/
-│   │   ├── branches/
-│   │   ├── messages/
-│   │   └── notifications/
-│   │
-│   ├── pages/
-│   │   ├── home/
-│   │   ├── explore/
-│   │   ├── create/
-│   │   ├── messages/
-│   │   ├── notifications/
-│   │   ├── profile/
-│   │   └── project/
-│   │
-│   ├── hooks/
-│   ├── utils/
-│   └── types/
-│
 ├── public/
-│   └── assets/
-│
+├── package.json
 ├── index.html
 ├── vite.config.ts
 ├── tailwind.config.ts
 └── tsconfig.json
+
+The application is organized around reusable React components, mock social data, page-level views, and shared UI utilities.
 
 Running Locally
 
@@ -411,13 +381,55 @@ Install
 
 npm install
 
-Start development server
+Start the development server
 
 npm run dev
 
-Then open the local URL shown in the terminal.
+Open the local URL shown in the terminal.
 
-The prototype runs entirely in the browser and does not require API keys or environment variables.
+The prototype runs entirely in the browser and does not require a backend or API keys.
+
+Pages at a Glance
+
+Home
+
+A personalized feed of active projects and social activity from people you follow.
+
+Explore
+
+Discover projects, creators, formats, and active collaborations outside your network.
+
+Project
+
+The core experience: view a project's contributions, branches, remixes, collaborators, and build on it.
+
+Create
+
+Start a new project by choosing a format and adding the first contribution.
+
+Messages
+
+Direct conversations between users and collaborators.
+
+Notifications
+
+Updates for contributions, branches, remixes, follows, and messages.
+
+Profile
+
+A creator's identity, projects, contributions, collaborations, and social graph.
+
+Why RELAY?
+
+The dominant model of social media asks:
+
+What do you think of this?
+
+RELAY asks instead:
+
+What would you add?
+
+That shift — from reaction to contribution — is the idea being explored by the project.
 
 Hackathon Context
 
@@ -444,18 +456,6 @@ Motion and micro-interactions
 Responsive frontend behavior
 
 RELAY is a concept prototype, not a production-ready social network.
-
-The Question Behind RELAY
-
-Traditional social media asks:
-
-What do you think of this?
-
-RELAY asks:
-
-What would you add?
-
-That shift — from reaction to contribution — is the idea being explored by the project.
 
 <div align="center">
 
