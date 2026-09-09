@@ -5,18 +5,13 @@ import {
   ActiveTab, 
   ContributionNode, 
   Collaborator, 
-  ActivityNotification,
   Conversation,
   Message,
-  UserProfile,
-  TrailEntry,
-  ProjectActivity
+  ActivityNotification
 } from './types';
-import { INITIAL_PROJECTS, CURRENT_USER } from './data/mockProjects';
-import { INITIAL_TREES, getTreeForProject } from './data/mockTrees';
+import { INITIAL_PROJECTS } from './data/mockProjects';
 import { 
   INITIAL_CONVERSATIONS, 
-  INITIAL_SOCIAL_NOTIFICATIONS, 
   SOCIAL_USERS 
 } from './data/mockSocial';
 
@@ -34,46 +29,29 @@ import { PassItOnModal } from './components/PassItOnModal';
 import { BackgroundIllustrations } from './components/BackgroundIllustrations';
 import { Sparkles, Check } from 'lucide-react';
 import { ProjectTrail } from './components/ProjectTrail';
+import { useRelayDomain } from './hooks/useRelayDomain';
 
 export default function App() {
-  const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
-  const [trees, setTrees] = useState<Record<string, ContributionNode[]>>(INITIAL_TREES);
-  const [trails, setTrails] = useState<Record<string, TrailEntry[]>>({
-    'proj-01': [
-      { id: 'trail-01-root', author: INITIAL_PROJECTS[0].creator, action: 'started', timestamp: '3d ago', preview: INITIAL_PROJECTS[0].currentPiece },
-      { id: 'trail-01-aditi', author: INITIAL_PROJECTS[0].activeContributors[0], action: 'continued', timestamp: '2h ago', preview: 'The clocks began losing minutes in different neighborhoods.' },
-      { id: 'trail-01-rahul', author: INITIAL_PROJECTS[0].activeContributors[1], action: 'remixed', timestamp: '1h ago', preview: 'A map is only honest when it admits what it cannot name.' },
-    ],
-  });
-  const [projectActivity, setProjectActivity] = useState<Record<string, ProjectActivity[]>>({
-    'proj-01': [
-      { id: 'activity-01-start', actor: INITIAL_PROJECTS[0].creator, text: 'started this', timestamp: '3h ago', accent: '#FFE28A' },
-      { id: 'activity-01-piece', actor: INITIAL_PROJECTS[0].activeContributors[0], text: 'added a piece', timestamp: '2h ago', accent: '#A9E3CF' },
-      { id: 'activity-01-remix', actor: INITIAL_PROJECTS[0].activeContributors[1], text: 'remixed it', timestamp: '1h ago', accent: '#B8A7FF' },
-    ],
-  });
+  const {
+    projects,
+    trees,
+    trails,
+    projectActivity,
+    notifications,
+    setNotifications,
+    user,
+    setUser,
+    createProject,
+    addContribution,
+    passProject,
+    ensureTree,
+  } = useRelayDomain();
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  
-  // Current user (Adam)
-  const [user, setUser] = useState<UserProfile>({
-    ...CURRENT_USER,
-    name: 'Adam',
-    username: 'adam',
-    bio: 'Starting open seeds and passing the baton. Open for branches, audio stems, and unexpected collaborative spin-offs.',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=240&auto=format&fit=crop',
-    followersCount: 629,
-    followingCount: 184,
-    projectsCount: 12,
-    contributionsCount: 47,
-    remixesCount: 19,
-    collaborationsCount: 23,
-  });
 
   // Social states
   const [conversations, setConversations] = useState<Conversation[]>(INITIAL_CONVERSATIONS);
   const [activeConversationId, setActiveConversationId] = useState<string>('conv-maya');
-  const [notifications, setNotifications] = useState<ActivityNotification[]>(INITIAL_SOCIAL_NOTIFICATIONS);
   const [followingUserIds, setFollowingUserIds] = useState<string[]>([
     'user-maya',
     'user-rahul',
@@ -121,10 +99,7 @@ export default function App() {
 
   // Open project detail
   const handleSelectProject = (project: Project) => {
-    if (!trees[project.id]) {
-      const generatedTree = getTreeForProject(project.id, project.title, project.currentPiece);
-      setTrees((prev) => ({ ...prev, [project.id]: generatedTree }));
-    }
+    ensureTree(project);
     setSelectedProject(project);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -140,7 +115,7 @@ export default function App() {
   // Direct quick continue / build on this from card or feed
   const handleContinueProject = (project: Project) => {
     handleSelectProject(project);
-    const projectTree = trees[project.id] || getTreeForProject(project.id, project.title, project.currentPiece);
+    const projectTree = ensureTree(project);
     const lastNode = projectTree[projectTree.length - 1];
     handleOpenContribution(lastNode, 'continue');
   };
@@ -148,40 +123,14 @@ export default function App() {
   // Quick remix from card
   const handleRemixProject = (project: Project) => {
     handleSelectProject(project);
-    const projectTree = trees[project.id] || getTreeForProject(project.id, project.title, project.currentPiece);
+    const projectTree = ensureTree(project);
     const lastNode = projectTree[projectTree.length - 1];
     handleOpenContribution(lastNode, 'remix');
   };
 
   // Handle new project creation from "Start something."
   const handleCreateProject = (newProject: Project) => {
-    setProjects((prev) => [newProject, ...prev]);
-
-    // Initialize root node in tree
-    const rootNode: ContributionNode = {
-      id: `node-${newProject.id}-root`,
-      projectId: newProject.id,
-      parentId: null,
-      author: newProject.creator,
-      content: newProject.currentPiece,
-      type: 'root',
-      branchName: 'Initial Seed',
-      timestamp: 'Just now',
-      depth: 0,
-      childrenIds: []
-    };
-
-    setTrees((prev) => ({
-      ...prev,
-      [newProject.id]: [rootNode]
-    }));
-
-    // Increment user creations count
-    setUser((prev) => ({
-      ...prev,
-      projectsCount: prev.projectsCount + 1,
-      creationsCount: prev.creationsCount + 1,
-    }));
+    createProject(newProject);
 
     setActiveTab('home');
     showToast(`🌱 SEED "${newProject.title}" IS LIVE ON RELAY!`);
@@ -199,45 +148,9 @@ export default function App() {
 
   const handlePassItOn = (recipient: Collaborator) => {
     if (!selectedProject) return;
-    const project = selectedProject;
-    const passedProject: Project = {
-      ...project,
-      passedBy: user,
-      passedTo: recipient,
-      passedAt: 'Just now',
-      passedCount: (project.passedCount || 0) + 1,
-      recentActivity: `${user.name} passed this to ${recipient.name} just now`,
-    };
-    const passTrail: TrailEntry = {
-      id: `trail-${Date.now()}`,
-      author: user,
-      action: 'passed',
-      timestamp: 'Just now',
-      preview: `Passed to ${recipient.name} to take the next turn.`,
-    };
-    const passActivity: ProjectActivity = {
-      id: `activity-${Date.now()}`,
-      actor: user,
-      text: `passed this to ${recipient.name}`,
-      timestamp: 'Just now',
-      accent: '#FFB49F',
-    };
-
+    const passedProject = passProject(selectedProject.id, recipient);
+    if (!passedProject) return;
     setSelectedProject(passedProject);
-    setProjects((prev) => prev.map((item) => (item.id === project.id ? passedProject : item)));
-    setTrails((prev) => ({ ...prev, [project.id]: [...(prev[project.id] || []), passTrail] }));
-    setProjectActivity((prev) => ({ ...prev, [project.id]: [passActivity, ...(prev[project.id] || [])] }));
-    setNotifications((prev) => [{
-      id: `notification-${Date.now()}`,
-      type: 'passed',
-      user,
-      text: `${user.name} passed ${project.title} to you.`,
-      projectTitle: project.title,
-      projectId: project.id,
-      timestamp: 'Just now',
-      read: false,
-      category: 'collaborations',
-    }, ...prev]);
     setLastPassedRecipient(recipient);
     setIsPassModalOpen(false);
     showToast(`Passed to ${recipient.name}.`);
@@ -251,79 +164,9 @@ export default function App() {
   ) => {
     if (!selectedProject) return;
 
-    const projectId = selectedProject.id;
-    const projectTree = trees[projectId] || getTreeForProject(projectId, selectedProject.title, selectedProject.currentPiece);
-    const parentNode = contributionTargetNode || projectTree[projectTree.length - 1];
-
-    const newNodeId = `node-${Date.now()}`;
-    const newNode: ContributionNode = {
-      id: newNodeId,
-      projectId,
-      parentId: parentNode ? parentNode.id : null,
-      author: {
-        name: user.name,
-        avatar: user.avatar,
-        role: 'Collaborator',
-        username: user.username,
-      },
-      content,
-      type,
-      branchName: branchLabel || (type === 'branch' ? 'New Branch' : type === 'remix' ? 'Remix Layer' : 'Continuation'),
-      timestamp: 'Just now',
-      depth: parentNode ? (parentNode.depth || 0) + 1 : 1,
-      childrenIds: []
-    };
-
-    // Update tree
-    const updatedTree = [...projectTree, newNode];
-    setTrees((prev) => ({
-      ...prev,
-      [projectId]: updatedTree
-    }));
-
-    // Update project stats
-    const updatedProject: Project = {
-      ...selectedProject,
-      currentPiece: content,
-      contributionsCount: selectedProject.contributionsCount + 1,
-      branchesCount: type === 'branch' ? selectedProject.branchesCount + 1 : selectedProject.branchesCount,
-      remixesCount: type === 'remix' ? selectedProject.remixesCount + 1 : selectedProject.remixesCount,
-      recentActivity: `${user.name} added a piece just now`,
-      liveNow: true,
-      activeContributors: [
-        { name: user.name, avatar: user.avatar, username: user.username },
-        ...(selectedProject.activeContributors || []).filter((c) => c.name !== user.name)
-      ]
-    };
-
+    const updatedProject = addContribution(selectedProject.id, contributionTargetNode, type, content, branchLabel);
+    if (!updatedProject) return;
     setSelectedProject(updatedProject);
-    setProjects((prev) => prev.map((p) => (p.id === projectId ? updatedProject : p)));
-
-    const trailAction: TrailEntry['action'] = type === 'branch' ? 'branched' : type === 'remix' ? 'remixed' : 'continued';
-    const trailEntry: TrailEntry = {
-      id: `trail-${newNodeId}`,
-      author: user,
-      action: trailAction,
-      timestamp: 'Just now',
-      preview: content,
-    };
-    const activityEntry: ProjectActivity = {
-      id: `activity-${newNodeId}`,
-      actor: user,
-      text: type === 'branch' ? 'created a branch' : type === 'remix' ? 'remixed this project' : 'continued this project',
-      timestamp: 'Just now',
-      accent: type === 'branch' ? '#8FD8FF' : type === 'remix' ? '#A9E3CF' : '#FFE28A',
-    };
-    setTrails((prev) => ({ ...prev, [projectId]: [...(prev[projectId] || []), trailEntry] }));
-    setProjectActivity((prev) => ({ ...prev, [projectId]: [activityEntry, ...(prev[projectId] || [])] }));
-
-    // Increment user metrics
-    setUser((prev) => ({
-      ...prev,
-      contributionsCount: prev.contributionsCount + 1,
-      collaborationsCount: prev.collaborationsCount + 1,
-      remixesCount: type === 'remix' ? prev.remixesCount + 1 : prev.remixesCount,
-    }));
 
     showToast(`✨ YOUR PIECE WAS WOVEN INTO "${selectedProject.title}"!`);
   };
@@ -331,7 +174,7 @@ export default function App() {
   const handleAddMessageToProject = (projectId: string, text: string) => {
     const project = projects.find((item) => item.id === projectId);
     if (!project) return;
-    const projectTree = trees[projectId] || getTreeForProject(projectId, project.title, project.currentPiece);
+    const projectTree = ensureTree(project);
     setSelectedProject(project);
     setContributionTargetNode(projectTree[projectTree.length - 1] || null);
     setContributionMode('continue');
@@ -663,7 +506,7 @@ export default function App() {
             project={selectedProject}
             treeNodes={
               trees[selectedProject.id] ||
-              getTreeForProject(selectedProject.id, selectedProject.title, selectedProject.currentPiece)
+              ensureTree(selectedProject)
             }
             onClose={() => setSelectedProject(null)}
             currentUser={{

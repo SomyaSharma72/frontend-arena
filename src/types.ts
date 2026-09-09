@@ -5,6 +5,8 @@ export type ProjectCategory =
   | 'music' 
   | 'challenge';
 
+export type ProjectMode = 'open' | 'relay';
+
 export interface Collaborator {
   id?: string;
   name: string;
@@ -64,6 +66,8 @@ export interface Project {
   passedBy?: Collaborator;
   passedAt?: string;
   passedCount?: number;
+  mode?: ProjectMode;
+  currentTurn?: Collaborator;
 }
 
 export interface ContributionNode {
@@ -98,6 +102,8 @@ export interface TrailEntry {
   action: 'started' | 'continued' | 'passed' | 'branched' | 'remixed' | 'added';
   timestamp: string;
   preview?: string;
+  source?: Collaborator;
+  target?: Collaborator;
 }
 
 export interface ProjectActivity {
@@ -122,6 +128,7 @@ export interface UserProfile {
   badges: string[];
   skills?: string[];
   joinedDate: string;
+  projectsCount?: number;
 }
 
 export interface Message {

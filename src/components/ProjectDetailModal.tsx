@@ -172,22 +172,25 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             </span>
           </div>
 
-          {project.passedTo && (
+          {project.mode === 'relay' && project.currentTurn && (
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-[#FFB49F]/25 border border-[#FFB49F]"
             >
               <div className="flex items-center gap-3">
-                <img src={project.passedTo.avatar} alt="" className="w-9 h-9 rounded-full object-cover border border-[#181818]" referrerPolicy="no-referrer" />
+                <img src={project.currentTurn.avatar} alt="" className="w-9 h-9 rounded-full object-cover border border-[#181818]" referrerPolicy="no-referrer" />
                 <div>
-                  <p className="text-sm font-display font-bold">{project.passedBy?.name || 'Someone'} passed this to {project.passedTo.name}.</p>
-                  <p className="text-[10px] font-mono-tech text-[#77736D]">The next move belongs to the chain.</p>
+                  <p className="text-[10px] font-mono-tech font-bold uppercase tracking-widest text-[#E11D48]">Current turn</p>
+                  <p className="text-sm font-display font-bold">{project.passedBy?.name || 'Someone'} passed this to {project.currentTurn.name}.</p>
+                  <p className="text-[10px] font-mono-tech text-[#77736D]">The next move belongs to {project.currentTurn.name}.</p>
                 </div>
               </div>
               <div className="flex gap-2 shrink-0">
                 <button onClick={() => onOpenContribution(selectedNode, 'continue')} className="px-3 py-2 rounded-lg bg-[#FFE28A] border border-[#181818] text-[10px] font-mono-tech font-bold cursor-pointer">CONTINUE</button>
                 <button onClick={() => onOpenContribution(selectedNode, 'branch')} className="px-3 py-2 rounded-lg bg-[#8FD8FF] border border-[#181818] text-[10px] font-mono-tech font-bold cursor-pointer">ANOTHER WAY</button>
+                <button onClick={() => onOpenContribution(selectedNode, 'remix')} className="px-3 py-2 rounded-lg bg-[#A9E3CF] border border-[#181818] text-[10px] font-mono-tech font-bold cursor-pointer">REMIX</button>
+                {onPassItOn && <button onClick={onPassItOn} className="px-3 py-2 rounded-lg bg-[#FFB49F] border border-[#181818] text-[10px] font-mono-tech font-bold cursor-pointer">PASS</button>}
               </div>
             </motion.div>
           )}
