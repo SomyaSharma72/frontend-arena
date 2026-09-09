@@ -1,7 +1,5 @@
 <div align="center">
 
-<br/>
-
 ```
 ██████╗ ███████╗██╗      █████╗ ██╗   ██╗
 ██╔══██╗██╔════╝██║     ██╔══██╗╚██╗ ██╔╝
@@ -15,19 +13,27 @@
 
 *A social platform built for people who want to **add** to the world — not just react to it.*
 
-<br/>
-
 [![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-FF0055?style=flat-square&logo=framer&logoColor=white)](https://framer.com/motion)
 [![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=flat-square&logo=greensock&logoColor=white)](https://gsap.com)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+
+<br/>
+
+[Overview](#-what-is-relay) •
+[Core Concepts](#-core-concepts) •
+[Design](#-design-language--motion) •
+[Architecture](#️-architecture--tech-stack) •
+[Getting Started](#-getting-started) •
+[Mock Projects](#-mock-projects)
 
 </div>
 
----
+<br/>
 
-## What is RELAY?
+## 📡 What is RELAY?
 
 Every social platform you've used runs on the same loop:
 
@@ -35,249 +41,264 @@ Every social platform you've used runs on the same loop:
 Post  →  Like  →  Comment  →  Repost
 ```
 
-You see content, react to it, and move on. The content stays the same.
+You see content, react to it, and move on. The content stays static.
 
 **RELAY runs on a different loop:**
 
 ```
-Start  →  Contribute  →  Branch  →  Remix  →  Collaborate
+Start  →  Build  →  Pass It On  →  Branch / Remix  →  Collaborate
 ```
 
-In RELAY, content is a *starting point* — not a destination. Anyone can pick up where someone left off, take the idea somewhere new, or remix it into something entirely their own.
+In RELAY, content is a starting point — not a destination. Anyone can pick up where someone left off, pass the baton forward, take the idea somewhere new, or remix it into something entirely their own.
 
 > **The shift:** from *"I saw this"* → to *"I added something to this."*
 
----
+<br/>
 
-## How It Works — A Quick Example
+## ⚙️ How It Works
 
-Someone starts a project called **The City Without Names:**
+The core innovation, in six steps:
 
-> *"The city woke up at 7:12 AM..."*
+1. **A creator starts a project.**
+2. **Someone builds on it** with a new contribution.
+3. **A contributor passes the work** to a specific person.
+4. **The recipient continues, branches, or remixes it.**
+5. **The project develops a visible social lineage.**
+6. **The result:** an evolving chain of contributions.
 
-Someone else continues:
-
-> *"At 7:13, every clock in the city stopped."*
-
-A third person takes it somewhere darker — and creates a **branch.**
-Another person remixes the whole thing into a poem.
-
-The original idea becomes a living chain of contributions, directions, and possibilities. That's a RELAY project.
-
----
-
-## Core Concepts
-
-### 📌 Projects
-
-The main content unit. A project starts with an opening contribution and grows from there.
-
-| Format | Example |
-|---|---|
-| **Story** | The City Without Names |
-| **Idea** | College in 2050 |
-| **Visual** | Build Something Strange |
-| **Music** | A Song We Never Finished |
-| **Challenge** | The Worst Startup Ever |
-
----
-
-### ✍️ Build on This
-
-The central action in RELAY. Instead of a Like button, there's a **Build on This** prompt — an invitation to add the next piece.
-
-Every contribution is credited, visible, and part of the project's history.
-
----
-
-### 🌿 Branches
-
-Projects don't have to go in one direction. When someone wants to explore a different path *without overwriting the existing thread*, they create a branch.
-
-```
-          Original
-             │
-      ┌──────┴──────┐
-      ↓             ↓
-   Branch A       Branch B
-      │
-   ┌──┴──┐
-   ↓     ↓
-  A-1   A-2
-```
-
-Branches are first-class — discoverable, creditable, and branchable themselves.
-
----
-
-### 🔀 Remixes
-
-A remix takes an existing project as inspiration and creates something new. Unlike a branch (which continues from a point in the thread), a remix is its own direction — linked to the source, but free to go anywhere.
-
----
-
-### 🏷️ Passing
-
-A project or contribution can be **passed** to a specific person:
+**Example lineage:**
 
 ```
 Adam  →  Maya  →  Rahul  →  Priya
 ```
 
-The recipient can continue, branch, or remix it. This is the idea behind the name RELAY — one person starts, another carries it forward.
+This direct, person-to-person handoff is the reason behind the name **RELAY** — one person starts, and others carry it forward.
 
----
+<br/>
 
-### 📊 Contribution Metrics
+## 🧩 Core Concepts
 
-RELAY replaces passive engagement numbers with contribution-based signals:
+### 📌 Projects
+The main content unit. A project starts with an opening contribution and grows through community additions across multiple creative formats — **Story, Idea, Visual, Music, Challenge.**
 
-| Instead of... | RELAY shows... |
-|---|---|
-| 1.2K likes | Built on **14** times |
-| 342 comments | **31** contributors |
-| 89 reposts | Remixed **8** times · **7** branches |
+### ✍️ Build on This
+The central action in RELAY. Instead of a passive *Like* button, a **Build on This** prompt invites collaborators to add the next piece. Every contribution is credited, visible, and recorded.
 
-The goal: highlight *creative participation*, not passive consumption.
+### 🏷️ Pass It On
+A creator or contributor can pass a project or contribution **directly to another person**. The recipient gets a notification and can continue, branch, or remix the work.
 
----
+Unlike a generic share or retag, *Pass It On* establishes a direct, person-to-person chain of participation.
 
-## Product Structure
+### 🌿 Branches
+Projects don't have to follow a single path. When someone wants to explore an alternate direction without overwriting the existing thread, they create a branch.
+
+```
+         Original
+            │
+     ┌──────┴──────┐
+     ↓             ↓
+  Branch A      Branch B
+     │
+  ┌──┴──┐
+  ↓     ↓
+ A-1   A-2
+```
+
+### 🔀 Remixes
+A remix takes an existing project as inspiration and creates a **standalone work**. While a branch continues from a specific point in a thread, a remix breaks off into a new project while keeping attribution to the original source.
+
+### 📜 Trail
+RELAY preserves the visible lineage of a project's evolution. The Trail records:
+
+- **Who** contributed
+- **What** action was taken *(Started, Continued, Remixed, Branched, Passed)*
+- **When** it occurred
+- **How** the work evolved overall
+
+```
+Adam                          Rahul
+Started · 3h ago               Remixed · 1h ago
+     │                              │
+     ▼                              ▼
+   Maya                          Priya
+Continued · 2h ago          Created a branch · 40m ago
+```
+
+<br/>
+
+## 📊 Contribution Metrics
+
+RELAY replaces passive vanity metrics with contribution-based signals:
+
+| Instead of... | RELAY highlights...          |
+|:---------------|:-------------------------------|
+| 1.2K likes     | Built on 14 times            |
+| 342 comments   | 31 contributors               |
+| 89 reposts     | Remixed 8 times · 7 branches |
+| Share count    | Passed to 5 people            |
+
+These metrics emphasize creative influence and active participation over passive scroll behavior.
+
+<br/>
+
+## 🔁 The Interaction Model
+
+```
+Discover Project
+       │
+       ▼
+  Open Project
+       │
+       ▼
+ Build on This
+       │
+       ├───► Add Contribution ───► Pass It On ───► Recipient Action
+       │                                                 │
+       ├───► Create Branch                               │
+       │                                                 │
+       └───► Create Remix                                │
+                                                           ▼
+                                            Trail Records Evolution
+```
+
+<br/>
+
+## 🗂️ Product Structure & Social Layer
+
+RELAY combines conventional social navigation with contribution-driven workflows:
 
 ```
 RELAY
 │
-├── 🏠  Home           →  Feed of active projects from people you follow
-├── 🔍  Explore        →  Discover creators, formats, and collaborations
-├── ✨  Create         →  Start a new project
-├── 💬  Messages       →  Direct conversations between collaborators
-├── 🔔  Notifications  →  Contributions, branches, remixes, follows
-└── 👤  Profile        →  Identity, projects, contributions, social graph
+├── 🏠 Home           → Social feed highlighting evolving project activity
+├── 🔍 Explore        → Discover creators, trending projects, formats, and branches
+├── ✨ Create         → Launch a new project with format-specific templates
+├── 💬 Messages       → Direct messaging and project-linked conversations
+├── 🔔 Notifications  → Activity alerts for contributions, passes, branches, and remixes
+└── 👤 Profile        → Identity, created projects, contributions, and social influence graph
 ```
 
----
+### Activity-Aware Feed
 
-## Design Language
+The Home feed surfaces real-time content evolution:
 
-RELAY uses a **warm, editorial visual system** — designed to feel like a creative space, not a feed optimised for attention.
+- *"Maya continued Adam's story."*
+- *"Rahul remixed Maya's idea."*
+- *"Priya created a branch on College in 2050."*
+- *"Adam passed The City Without Names to Maya."*
 
-| Element | Direction |
-|---|---|
-| Backgrounds | Warm cream — feels like paper, not a screen |
-| Typography | Expressive, editorial weight |
-| Project artwork | Each project has its own visual identity |
-| Motion | Feedback-driven — animations show *what just happened* |
-| Overall feel | Friendly · Creative · Social · Modern · Premium |
+<br/>
 
-RELAY intentionally avoids: dark themes, neon accents, and the visual vocabulary of engagement-maximising feeds.
+## 🎨 Design Language & Motion
 
-### Motion & Micro-interactions
+RELAY uses a warm, editorial visual system designed to feel like a shared canvas rather than an attention-maximizing feed.
 
-Animation in RELAY answers one question: *"what just happened?"*
+| Element          | Direction                                                    |
+|:------------------|:----------------------------------------------------------------|
+| **Color Palette**   | Warm cream and paper tones — warm light theme                 |
+| **Typography**      | Editorial headings with clean, structural sans body copy       |
+| **Visual Identity** | Distinctive, visual-first project artwork and illustrations    |
+| **Feel**            | Editorial · Collaborative · Social · Modern · Premium          |
 
-- Page transitions on navigation
-- Hover states and parallax on project cards
-- Contribution success animation
-- Branch creation animation (visually forks from the thread)
-- Remix transition (links source to new project)
-- Scroll-triggered section reveals
-- Animated notifications and loading states
+### Motion Design
 
----
+Animation in RELAY provides functional feedback that clarifies project state transitions:
 
-## Tech Stack
+- **Pass It On confirmation** — visual indicator confirming handoff to recipient
+- **Trail reveal** — smooth accordion transitions unfolding project history
+- **Contribution success** — animated feedback when adding to a thread
+- **Branch & Remix transitions** — visual splits mapping lineage connections
+- **UI interactions** — subtle hover parallax, route transitions, notification overlays
 
-| Layer | Technology |
-|---|---|
-| UI Framework | React 18 |
-| Language | TypeScript 5 |
-| Styling | Tailwind CSS |
-| Component animation | Framer Motion |
-| Scroll / timeline animation | GSAP + ScrollTrigger |
-| Additional motion | CSS + SVG animations |
-| State management | React Context + local state |
-| Data | Static mock data (in-memory) |
-| Build tool | Vite |
-| Auth | Simulated — no real credentials needed |
+<br/>
 
-> **Frontend-only.** No backend, no database, no API keys required.
+## 🏗️ Architecture & Tech Stack
 
----
+### Tech Stack
 
-## Project Structure
+| Layer                       | Technology            |
+|:------------------------------|:-------------------------|
+| UI Framework                | React 18               |
+| Language                    | TypeScript 5            |
+| Styling                     | Tailwind CSS            |
+| Motion                      | Framer Motion           |
+| Scroll / Canvas Animations  | GSAP + ScrollTrigger    |
+| Build Tool                  | Vite                    |
+
+### State Management
+
+The application enforces strict separation of concerns across four layers:
+
+| Layer | Location | Responsibility |
+|:---|:---|:---|
+| **Presentation / UI** | `src/components/`, `src/pages/` | Pure display components and view routing |
+| **State & Domain Logic** | `src/context/`, `src/hooks/` | Manages active projects, contribution chains, mock notifications, message threads |
+| **Mock Data Layer** | `src/data/` | In-memory datasets of pre-populated projects, user profiles, and contribution histories |
+| **Types & Utilities** | `src/types/`, `src/utils/` | Centralized TypeScript interfaces for project formats, pass events, and trail histories |
+
+### Project Structure
 
 ```
 relay/
 ├── src/
 │   ├── components/
-│   │   ├── navigation/     # Sidebar, bottom nav, search
-│   │   ├── project/        # Project cards, contribution thread, branch view
-│   │   ├── feed/           # Home feed and activity stream
-│   │   ├── messaging/      # DM threads and composer
-│   │   ├── notifications/  # Notification list and alerts
-│   │   ├── profile/        # Profile header, project grid, followers
-│   │   ├── create/         # Project creation flow, format picker
+│   │   ├── navigation/     # Sidebar, top navigation, search UI
+│   │   ├── project/        # Cards, contribution threads, branch views, trail lineage
+│   │   ├── feed/           # Feed items and activity stream cards
+│   │   ├── messaging/      # Direct messages and project-linked chat
+│   │   ├── notifications/  # Activity feeds and pass/branch alerts
+│   │   ├── profile/        # Profile header, contribution grid, follower lists
+│   │   ├── create/         # Project creation wizard and format selectors
 │   │   └── ui/             # Buttons, inputs, modals, toasts, loaders
 │   │
-│   ├── data/
-│   │   ├── users/          # Mock user profiles and follower graphs
-│   │   ├── projects/       # Mock projects with contributions
-│   │   ├── contributions/  # Contribution history and attribution
-│   │   ├── branches/       # Branch structures
-│   │   ├── messages/       # Mock DM threads
-│   │   └── notifications/  # Mock notification events
-│   │
-│   ├── pages/
-│   │   ├── home/
-│   │   ├── explore/
-│   │   ├── create/
-│   │   ├── messages/
-│   │   ├── notifications/
-│   │   ├── profile/
-│   │   └── project/
-│   │
-│   ├── hooks/              # Custom React hooks
-│   ├── utils/              # Helpers, formatting, mock utilities
-│   └── types/              # TypeScript interfaces
+│   ├── context/            # Global state context (Projects, User, Notifications)
+│   ├── data/                # In-memory mock data (projects, users, messages)
+│   ├── hooks/               # Custom hooks for state mutation and UI controls
+│   ├── pages/                # Route pages (Home, Explore, Create, Messages, Notifications, Profile, ProjectDetail)
+│   ├── types/                # TypeScript definitions (Project, Contribution, Pass, Trail)
+│   └── utils/                # Formatting helpers, date tools, mock generators
 │
-├── public/assets/          # Project artwork, avatars, illustrations
+├── public/                   # Static assets, avatars, project artwork
 ├── index.html
 ├── vite.config.ts
 ├── tailwind.config.ts
 └── tsconfig.json
 ```
 
----
+<br/>
 
-## Getting Started
+## 🚀 Getting Started
 
-**Requires:** Node.js 18+
+### Prerequisites
+
+- **Node.js** — v18.0.0 or higher
+- **npm** — v9.0.0 or higher
+
+### Installation
 
 ```bash
-# 1. Clone the repo
+# 1. Clone the repository
 git clone https://github.com/your-username/relay.git
 cd relay
 
 # 2. Install dependencies
 npm install
 
-# 3. Start the dev server
+# 3. Start the Vite development server
 npm run dev
 ```
 
-Open the local URL shown in your terminal (default: `http://localhost:5173`).
+Open the local URL shown in your terminal (typically `http://localhost:5173`). No `.env` configuration or database setup is required.
 
-No `.env` file needed. No API keys. No backend setup. Just `npm install` and go.
+<br/>
 
----
+## 🎭 Mock Projects
 
-## Mock Projects
-
-The prototype ships with 10 fictional projects across all formats:
+The prototype includes pre-loaded interactive projects demonstrating various formats and lineage structures:
 
 | Project | Format | Activity |
-|---|---|---|
-| The City Without Names | Story | 7 contributors · 3 branches |
+|:---|:---|:---|
+| The City Without Names | Story | 7 contributors · 3 branches · Passed 2x |
 | The Last Signal | Story | 4 contributors · 1 remix |
 | One Sentence Before Midnight | Story | 12 contributors |
 | College in 2050 | Idea | 6 contributors · 2 branches |
@@ -288,60 +309,39 @@ The prototype ships with 10 fictional projects across all formats:
 | The Room That Moved | Story | 5 contributors · 1 remix |
 | After the Last Train | Story | 8 contributors |
 
-Each project has its own artwork, contributor avatars, activity timestamps, contribution history, and branch structure.
+<br/>
 
----
+## 🚫 What's Not Included
 
-## What's Not Included (Intentionally)
+This is a hackathon prototype designed to demonstrate interaction design, state mechanics, and user experience. Out of scope for this build:
 
-This is a hackathon prototype. The following are out of scope:
+- ❌ Real backend database or persistence layer
+- ❌ Production authentication infrastructure
+- ❌ WebSockets / real-time multi-user editing
+- ❌ Push notifications *(simulated locally)*
+- ❌ Content moderation pipelines
 
-- ❌ Real user authentication
-- ❌ Backend / database
-- ❌ Real-time collaboration
-- ❌ Push notifications
-- ❌ Content moderation
-- ❌ Production API
+<br/>
 
-Everything is simulated in the browser using mock data and local state. The prototype exists to demonstrate the **concept, interaction model, and visual experience** — not production infrastructure.
-
----
-
-## Why RELAY?
-
-Most platforms optimise for one thing: keeping you scrolling.
-
-They reward the loudest voices, the most reactive content, and the fastest opinions.
-
-RELAY asks a different question:
-
-> **What if the best thing you could do with a piece of content… was add to it?**
-
-That shift — from reaction to contribution — is what RELAY is exploring. When social credit comes from building rather than reacting, the incentives change. The content changes. The community changes.
-
----
-
-## Hackathon
+## 🏆 Hackathon Alignment
 
 Built for the **REIMAGINE SOCIAL — Design the Next Generation of Social Interaction** challenge.
 
-The prototype prioritises:
-- A new, contribution-based interaction model
-- Familiar social-network infrastructure (so it's immediately learnable)
-- Strong visual and motion design
-- Realistic collaborative project flows
-- Branching and remixing as first-class features
+RELAY explores how social architecture evolves when platforms move away from passive consumption loops. By preserving standard social expectations — feeds, profiles, messaging — while replacing the core reaction primitive with **Build On**, **Pass It On**, and **Trail**, RELAY demonstrates a viable model for contribution-first social media.
 
----
+<br/>
 
 <div align="center">
+
+**Traditional social media asks:**
+*"What do you think of this?"*
+
+**RELAY asks:**
+### *"What would you add?"*
 
 <br/>
 
 **RELAY**
-
 *Start something. Pass it on.*
-
-<br/>
 
 </div>
