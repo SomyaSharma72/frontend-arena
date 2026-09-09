@@ -1,466 +1,347 @@
-RELAY
-
 <div align="center">
 
-Start something. Pass it on.
+<br/>
 
-A new kind of social — built for people who want to add to the world, not just react to it.
+```
+██████╗ ███████╗██╗      █████╗ ██╗   ██╗
+██╔══██╗██╔════╝██║     ██╔══██╗╚██╗ ██╔╝
+██████╔╝█████╗  ██║     ███████║ ╚████╔╝
+██╔══██╗██╔══╝  ██║     ██╔══██║  ╚██╔╝
+██║  ██║███████╗███████╗██║  ██║   ██║
+╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝
+```
 
-React · TypeScript · Tailwind CSS · Framer Motion · GSAP
+### Start something. Pass it on.
+
+*A social platform built for people who want to **add** to the world — not just react to it.*
+
+<br/>
+
+[![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-FF0055?style=flat-square&logo=framer&logoColor=white)](https://framer.com/motion)
+[![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=flat-square&logo=greensock&logoColor=white)](https://gsap.com)
 
 </div>
 
-What is RELAY?
+---
 
-Most social platforms follow a familiar loop:
+## What is RELAY?
 
-Post → Like → Comment → Repost
+Every social platform you've used runs on the same loop:
 
-You see something, react to it, and move on.
+```
+Post  →  Like  →  Comment  →  Repost
+```
 
-RELAY explores a different loop:
+You see content, react to it, and move on. The content stays the same.
 
-Start → Contribute → Branch → Remix → Collaborate
+**RELAY runs on a different loop:**
 
-In RELAY, content is a starting point, not a destination.
+```
+Start  →  Contribute  →  Branch  →  Remix  →  Collaborate
+```
 
-A creator can start a story, idea, visual, music concept, or challenge. Other people can continue it, build on it, branch it into another direction, or remix it into something new.
+In RELAY, content is a *starting point* — not a destination. Anyone can pick up where someone left off, take the idea somewhere new, or remix it into something entirely their own.
 
-The result is content that evolves through the people who participate in it.
+> **The shift:** from *"I saw this"* → to *"I added something to this."*
 
-The Core Idea
+---
 
-Imagine Adam starts:
+## How It Works — A Quick Example
 
-"The city woke up at 7:12 AM..."
+Someone starts a project called **The City Without Names:**
+
+> *"The city woke up at 7:12 AM..."*
 
 Someone else continues:
 
-"At 7:13, every clock in the city stopped."
+> *"At 7:13, every clock in the city stopped."*
 
-Another contributor takes the story somewhere darker and creates a branch.
+A third person takes it somewhere darker — and creates a **branch.**
+Another person remixes the whole thing into a poem.
 
-Someone else remixes that version.
+The original idea becomes a living chain of contributions, directions, and possibilities. That's a RELAY project.
 
-The original idea becomes a living chain of contributions and possibilities.
+---
 
-That's a RELAY project.
+## Core Concepts
 
-Why is it different?
+### 📌 Projects
 
-RELAY is still a social network. It includes the infrastructure users expect:
+The main content unit. A project starts with an opening contribution and grows from there.
 
-Home feed
+| Format | Example |
+|---|---|
+| **Story** | The City Without Names |
+| **Idea** | College in 2050 |
+| **Visual** | Build Something Strange |
+| **Music** | A Song We Never Finished |
+| **Challenge** | The Worst Startup Ever |
 
-Explore
+---
 
-Search
+### ✍️ Build on This
 
-Profiles
+The central action in RELAY. Instead of a Like button, there's a **Build on This** prompt — an invitation to add the next piece.
 
-Following
+Every contribution is credited, visible, and part of the project's history.
 
-Direct messages
+---
 
-Notifications
+### 🌿 Branches
 
-Visual content
+Projects don't have to go in one direction. When someone wants to explore a different path *without overwriting the existing thread*, they create a branch.
 
-The difference is the interaction layer.
+```
+          Original
+             │
+      ┌──────┴──────┐
+      ↓             ↓
+   Branch A       Branch B
+      │
+   ┌──┴──┐
+   ↓     ↓
+  A-1   A-2
+```
 
-Instead of making these the primary actions:
+Branches are first-class — discoverable, creditable, and branchable themselves.
 
-Like · Comment · Repost
+---
 
-RELAY focuses on:
+### 🔀 Remixes
 
-Build on this · Continue · Remix · Take another direction
+A remix takes an existing project as inspiration and creates something new. Unlike a branch (which continues from a point in the thread), a remix is its own direction — linked to the source, but free to go anywhere.
 
-The experiment is simple:
+---
 
-What if social content was something you could join instead of only react to?
+### 🏷️ Passing
 
-Core Features
+A project or contribution can be **passed** to a specific person:
 
-Projects
+```
+Adam  →  Maya  →  Rahul  →  Priya
+```
 
-Projects are the main content objects in RELAY.
+The recipient can continue, branch, or remix it. This is the idea behind the name RELAY — one person starts, another carries it forward.
 
-A project can be:
+---
 
-Story
+### 📊 Contribution Metrics
 
-Idea
+RELAY replaces passive engagement numbers with contribution-based signals:
 
-Visual
+| Instead of... | RELAY shows... |
+|---|---|
+| 1.2K likes | Built on **14** times |
+| 342 comments | **31** contributors |
+| 89 reposts | Remixed **8** times · **7** branches |
 
-Music
+The goal: highlight *creative participation*, not passive consumption.
 
-Challenge
+---
 
-Each project starts with an opening contribution and can evolve over time.
+## Product Structure
 
-Build on This
-
-The central interaction.
-
-Users can add the next piece to an existing project.
-
-Examples:
-
-Continue the next scene of a story
-
-Add a layer to a music project
-
-Extend an idea
-
-Add to a visual concept
-
-Add the next rule to a challenge
-
-Branches
-
-Projects can evolve in multiple directions.
-
-                 Original
-                    |
-             ┌──────┴──────┐
-             ↓             ↓
-          Branch A       Branch B
-             |
-          ┌──┴──┐
-          ↓     ↓
-         A1     A2
-
-A branch preserves the existing direction while allowing contributors to explore something different.
-
-Remixes
-
-A remix creates a new interpretation of an existing project while maintaining a visible connection to the source.
-
-Passing
-
-A project or contribution can be passed to another person.
-
-Adam → Maya → Rahul → Priya
-
-The recipient can continue, branch, or remix it.
-
-This is the idea behind the name RELAY:
-
-One person starts. Another carries it forward.
-
-Social Recognition
-
-RELAY replaces passive engagement metrics with contribution-based signals such as:
-
-Built on 14 times
-
-Remixed 8 times
-
-31 contributors
-
-7 branches
-
-Passed to 4 people
-
-The goal is to highlight creative influence and participation.
-
-Product Structure
-
+```
 RELAY
 │
-├── Home
-│   └── Feed + active projects
-│
-├── Explore
-│   └── Discover creators + projects
-│
-├── Create
-│   └── Start a new project
-│
-├── Messages
-│   └── Direct + project conversations
-│
-├── Notifications
-│   └── Social + project activity
-│
-└── Profile
-    └── Identity + creations + contributions
+├── 🏠  Home           →  Feed of active projects from people you follow
+├── 🔍  Explore        →  Discover creators, formats, and collaborations
+├── ✨  Create         →  Start a new project
+├── 💬  Messages       →  Direct conversations between collaborators
+├── 🔔  Notifications  →  Contributions, branches, remixes, follows
+└── 👤  Profile        →  Identity, projects, contributions, social graph
+```
 
-Example User Journey
+---
 
-Open RELAY
-    ↓
-Discover a project in the feed
-    ↓
-Open the project
-    ↓
-Build on this
-    ↓
-Add a contribution
-    ↓
-Contribution becomes part of the project
-    ↓
-Pass it to another person
-    ↓
-They continue, branch, or remix it
-    ↓
-The project evolves
+## Design Language
 
-Visual Design
+RELAY uses a **warm, editorial visual system** — designed to feel like a creative space, not a feed optimised for attention.
 
-RELAY uses a warm, light, editorial visual system.
+| Element | Direction |
+|---|---|
+| Backgrounds | Warm cream — feels like paper, not a screen |
+| Typography | Expressive, editorial weight |
+| Project artwork | Each project has its own visual identity |
+| Motion | Feedback-driven — animations show *what just happened* |
+| Overall feel | Friendly · Creative · Social · Modern · Premium |
 
-The interface combines:
+RELAY intentionally avoids: dark themes, neon accents, and the visual vocabulary of engagement-maximising feeds.
 
-Warm cream backgrounds
+### Motion & Micro-interactions
 
-Soft accent colors
+Animation in RELAY answers one question: *"what just happened?"*
 
-Expressive typography
+- Page transitions on navigation
+- Hover states and parallax on project cards
+- Contribution success animation
+- Branch creation animation (visually forks from the thread)
+- Remix transition (links source to new project)
+- Scroll-triggered section reveals
+- Animated notifications and loading states
 
-Colorful project artwork
+---
 
-Illustrations
+## Tech Stack
 
-Visual-first cards
+| Layer | Technology |
+|---|---|
+| UI Framework | React 18 |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS |
+| Component animation | Framer Motion |
+| Scroll / timeline animation | GSAP + ScrollTrigger |
+| Additional motion | CSS + SVG animations |
+| State management | React Context + local state |
+| Data | Static mock data (in-memory) |
+| Build tool | Vite |
+| Auth | Simulated — no real credentials needed |
 
-Subtle shadows and borders
+> **Frontend-only.** No backend, no database, no API keys required.
 
-Smooth transitions
+---
 
-Micro-interactions
+## Project Structure
 
-The global interface stays restrained while individual projects can have their own visual identity.
-
-The intended feel is:
-
-Friendly · Creative · Social · Modern · Premium
-
-Motion & Interaction
-
-Motion is used primarily as feedback.
-
-Examples:
-
-Project-card hover effects
-
-Page transitions
-
-Custom cursor states
-
-Button micro-interactions
-
-Contribution animations
-
-Branch creation animations
-
-Remix transitions
-
-Scroll reveals
-
-Animated illustrations
-
-Branded loading states
-
-Notification and message transitions
-
-The goal is to make the product feel alive without overwhelming the interface.
-
-Mock Content
-
-The prototype includes fictional projects such as:
-
-The City Without Names
-
-The Last Signal
-
-One Sentence Before Midnight
-
-College in 2050
-
-The Worst Startup Ever
-
-A Song We Never Finished
-
-If Gravity Disappeared
-
-Build Something Strange
-
-The Room That Moved
-
-After the Last Train
-
-Mock users, contributions, branches, messages, notifications, timestamps, and activity are used to make the frontend feel populated.
-
-Technology
-
-Layer
-
-Technology
-
-UI
-
-React
-
-Language
-
-TypeScript
-
-Styling
-
-Tailwind CSS
-
-Component animation
-
-Framer Motion
-
-Timeline / scroll animation
-
-GSAP + ScrollTrigger
-
-Additional motion
-
-CSS + SVG animations
-
-State
-
-React local state / Context
-
-Data
-
-Static mock data / in-memory state
-
-Build
-
-Vite
-
-Frontend-Only Scope
-
-RELAY is a hackathon prototype.
-
-There is currently:
-
-No backend
-
-No database
-
-No real authentication
-
-No production API
-
-No real-time collaboration
-
-No push notification infrastructure
-
-The experience is simulated entirely in the browser using mock data and local state.
-
-This keeps the prototype focused on the product concept, interaction model, visual design, and user experience.
-
-Project Structure
-
+```
 relay/
 ├── src/
-├── public/
-├── package.json
+│   ├── components/
+│   │   ├── navigation/     # Sidebar, bottom nav, search
+│   │   ├── project/        # Project cards, contribution thread, branch view
+│   │   ├── feed/           # Home feed and activity stream
+│   │   ├── messaging/      # DM threads and composer
+│   │   ├── notifications/  # Notification list and alerts
+│   │   ├── profile/        # Profile header, project grid, followers
+│   │   ├── create/         # Project creation flow, format picker
+│   │   └── ui/             # Buttons, inputs, modals, toasts, loaders
+│   │
+│   ├── data/
+│   │   ├── users/          # Mock user profiles and follower graphs
+│   │   ├── projects/       # Mock projects with contributions
+│   │   ├── contributions/  # Contribution history and attribution
+│   │   ├── branches/       # Branch structures
+│   │   ├── messages/       # Mock DM threads
+│   │   └── notifications/  # Mock notification events
+│   │
+│   ├── pages/
+│   │   ├── home/
+│   │   ├── explore/
+│   │   ├── create/
+│   │   ├── messages/
+│   │   ├── notifications/
+│   │   ├── profile/
+│   │   └── project/
+│   │
+│   ├── hooks/              # Custom React hooks
+│   ├── utils/              # Helpers, formatting, mock utilities
+│   └── types/              # TypeScript interfaces
+│
+├── public/assets/          # Project artwork, avatars, illustrations
 ├── index.html
 ├── vite.config.ts
 ├── tailwind.config.ts
 └── tsconfig.json
+```
 
-The application is organized around reusable React components, mock social data, page-level views, and shared UI utilities.
+---
 
-Running Locally
+## Getting Started
 
-Prerequisites
+**Requires:** Node.js 18+
 
-Node.js 18+
+```bash
+# 1. Clone the repo
+git clone https://github.com/your-username/relay.git
+cd relay
 
-Install
-
+# 2. Install dependencies
 npm install
 
-Start the development server
-
+# 3. Start the dev server
 npm run dev
+```
 
-Open the local URL shown in the terminal.
+Open the local URL shown in your terminal (default: `http://localhost:5173`).
 
-The prototype runs entirely in the browser and does not require a backend or API keys.
+No `.env` file needed. No API keys. No backend setup. Just `npm install` and go.
 
-Pages at a Glance
+---
 
-Home
+## Mock Projects
 
-A personalized feed of active projects and social activity from people you follow.
+The prototype ships with 10 fictional projects across all formats:
 
-Explore
+| Project | Format | Activity |
+|---|---|---|
+| The City Without Names | Story | 7 contributors · 3 branches |
+| The Last Signal | Story | 4 contributors · 1 remix |
+| One Sentence Before Midnight | Story | 12 contributors |
+| College in 2050 | Idea | 6 contributors · 2 branches |
+| The Worst Startup Ever | Challenge | 9 contributors |
+| A Song We Never Finished | Music | 3 contributors |
+| If Gravity Disappeared | Idea | 4 active branches |
+| Build Something Strange | Challenge | 22 contributors |
+| The Room That Moved | Story | 5 contributors · 1 remix |
+| After the Last Train | Story | 8 contributors |
 
-Discover projects, creators, formats, and active collaborations outside your network.
+Each project has its own artwork, contributor avatars, activity timestamps, contribution history, and branch structure.
 
-Project
+---
 
-The core experience: view a project's contributions, branches, remixes, collaborators, and build on it.
+## What's Not Included (Intentionally)
 
-Create
+This is a hackathon prototype. The following are out of scope:
 
-Start a new project by choosing a format and adding the first contribution.
+- ❌ Real user authentication
+- ❌ Backend / database
+- ❌ Real-time collaboration
+- ❌ Push notifications
+- ❌ Content moderation
+- ❌ Production API
 
-Messages
+Everything is simulated in the browser using mock data and local state. The prototype exists to demonstrate the **concept, interaction model, and visual experience** — not production infrastructure.
 
-Direct conversations between users and collaborators.
+---
 
-Notifications
+## Why RELAY?
 
-Updates for contributions, branches, remixes, follows, and messages.
+Most platforms optimise for one thing: keeping you scrolling.
 
-Profile
+They reward the loudest voices, the most reactive content, and the fastest opinions.
 
-A creator's identity, projects, contributions, collaborations, and social graph.
+RELAY asks a different question:
 
-Why RELAY?
+> **What if the best thing you could do with a piece of content… was add to it?**
 
-The dominant model of social media asks:
+That shift — from reaction to contribution — is what RELAY is exploring. When social credit comes from building rather than reacting, the incentives change. The content changes. The community changes.
 
-What do you think of this?
+---
 
-RELAY asks instead:
+## Hackathon
 
-What would you add?
+Built for the **REIMAGINE SOCIAL — Design the Next Generation of Social Interaction** challenge.
 
-That shift — from reaction to contribution — is the idea being explored by the project.
+The prototype prioritises:
+- A new, contribution-based interaction model
+- Familiar social-network infrastructure (so it's immediately learnable)
+- Strong visual and motion design
+- Realistic collaborative project flows
+- Branching and remixing as first-class features
 
-Hackathon Context
-
-Built for:
-
-REIMAGINE SOCIAL — Design the Next Generation of Social Interaction
-
-The prototype focuses on demonstrating:
-
-A different social interaction model
-
-Familiar social-media infrastructure
-
-Contribution-based engagement
-
-Branching and remixing
-
-Direct collaboration
-
-Strong visual identity
-
-Motion and micro-interactions
-
-Responsive frontend behavior
-
-RELAY is a concept prototype, not a production-ready social network.
+---
 
 <div align="center">
 
-RELAY
+<br/>
 
-Start something. Pass it on.
+**RELAY**
+
+*Start something. Pass it on.*
+
+<br/>
 
 </div>
